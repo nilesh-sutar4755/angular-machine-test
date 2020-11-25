@@ -1,0 +1,51 @@
+<main>
+  <div class="container">
+    <div class="row">
+      <div class="col-md-8">
+        <div class="row">
+            <div class="col-md-6">
+              <h4 class="my-3">Users List</h4>
+            </div>
+            <div class="col-md-6 text-right">
+              <button class="btn btn-primary" (click)="openModal()">Add</button>
+            </div>
+        </div>
+        <table class="table table-striped">
+          <thead>
+            <tr>
+              <th scope="col">Name</th>
+              <th scope="col">Birth Date</th>
+              <th scope="col">Languages</th>
+              <th scope="col">Gender</th>
+              <th scope="col">About</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr *ngFor="let item of users; index as i">
+              <td>
+                {{ item.fName }}
+              </td>
+              <td>{{ item.dob | date }}</td>
+              <td>
+                <span *ngFor="let lang of item.languages">
+                  {{lang}},
+                </span>
+              </td>
+              <td>
+                {{item.gender}}
+              </td>
+              <td>
+                {{item.about}}
+              </td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+      <div class="col-md-4">
+        <div class="progress-bar-wrap d-flex my-5">
+          <app-progress-bar [passData]="userData" class="my-5 w-100"></app-progress-bar>
+        </div>
+      </div>
+    </div>
+  </div>
+</main>

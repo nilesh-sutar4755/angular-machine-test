@@ -1,0 +1,64 @@
+<div class="modal-header">
+  <h4 class="modal-title" id="modal-basic-title">Add User</h4>
+  <button type="button" class="close border-0" aria-label="Close" (click)="activeModal?.close()">
+    <span aria-hidden="true">&times;</span>
+  </button>
+</div>
+<div class="modal-body">
+  <form>
+    <div class="form-group">
+      <label for="fullName">Name <span class="text-danger">*</span> </label>
+      <div class="input-group">
+        <input id="fullName" class="form-control" placeholder="Enter Name" name="fName"
+          [formControl]="userForm.controls['fName']">
+      </div>
+      <div *ngIf="userForm.controls['fName'].touched && userForm.controls['fName'].invalid" class="alert alert-danger">
+        <div *ngIf="userForm.controls['fName'].errors.required">Name is required</div>
+      </div>
+    </div>
+    <div class="form-group">
+      <label for="dateOfBirth">Date of birth <span class="text-danger">*</span></label>
+      <div class="input-group">
+        <input id="dateOfBirth" readonly class="form-control" placeholder="yyyy-mm-dd" name="dp" ngbDatepicker
+          #dp="ngbDatepicker" [formControl]="userForm.controls['dob']">
+        <div class="input-group-append">
+          <button class="btn btn-outline-secondary calendar" (click)="dp.toggle()" type="button"></button>
+        </div>
+      </div>
+      <div *ngIf="userForm.controls['dob'].touched && userForm.controls['dob'].invalid" class="alert alert-danger">
+        <div *ngIf="userForm.controls['dob'].errors.required">DOB is required</div>
+      </div>
+    </div>
+    <div class="form-group">
+      <angular2-multiselect [data]="languagesArr" [ngModelOptions]="{standalone: true}" [(ngModel)]="selectedItems"
+        [settings]="dropdownSettings"></angular2-multiselect>
+      <span class="text-danger">*</span>
+    </div>
+    <div class="form-group">
+      <label for="gender">Gender <span class="text-danger">*</span></label>
+      <div class="input-group">
+        <ng-container *ngFor="let item of genderArr;let i =index">
+          <div>
+            <input type="radio" name="gender" [id]="i" [formControl]="userForm.controls['gender']" [value]="item.value">
+            <label [for]="i" class="ml-3 mr-3">{{item.lable}}</label>
+          </div>
+        </ng-container>
+      </div>
+    </div>
+    <div class="form-group">
+      <label for="about">About <span class="text-danger">*</span></label>
+      <div class="input-group">
+        <textarea id="about" class="form-control" placeholder="Enter about" name="about"
+          [formControl]="userForm.controls['about']" cols="30" rows="3"></textarea>
+      </div>
+      <div *ngIf="userForm.controls['about'].touched && userForm.controls['about'].invalid" class="alert alert-danger">
+        <div *ngIf="userForm.controls['about'].errors.required">About field is required</div>
+      </div>
+    </div>
+  </form>
+</div>
+<div class="modal-footer justify-content-between">
+  <small class="text-black-50">( <span class="text-danger">*</span> indicates required field)</small>
+  <button type="button" class="btn btn-success" [disabled]="userForm.invalid || selectedItems.length == 0"
+    (click)="submit()">Save</button>
+</div>
